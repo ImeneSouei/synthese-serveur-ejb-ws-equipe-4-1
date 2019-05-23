@@ -1,3 +1,4 @@
+
 package com.infotel.metier;
 
 import java.io.Serializable;
@@ -13,6 +14,13 @@ import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+
+
 
 @Entity
 @XmlRootElement
@@ -31,8 +39,10 @@ private int codeMagasin;
 private double prixDuLocal;
 
 @OneToMany (mappedBy = "magasin", cascade = CascadeType.REMOVE)
+@XmlTransient
 List<Produit> produits = new ArrayList<Produit>();
 
+@JsonIgnore
 public List<Produit> getProduits() {
 	return produits;
 }
@@ -69,5 +79,5 @@ public String toString() {
 			+ ", prixDuLocal=" + prixDuLocal + "]";
 }
 
-
 }
+
