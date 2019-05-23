@@ -37,7 +37,7 @@ public class DaoImpl implements IdaoLocal, IdaoRemote {
 	@Override
 	public void supprimerMagasin(long idMagasin) {
 		Query q = null;
-		q = em.createQuery("DELETE FROM Magasin  WHERE m.idMagasin = :x").setParameter("x", idMagasin);
+		q = em.createQuery("DELETE FROM Magasin m WHERE m.idMagasin = :x").setParameter("x", idMagasin);
 		idMagasin = (long) q.executeUpdate();
 
 	}
