@@ -67,4 +67,13 @@ dao.supprimerMagasin(idMagasin);
 
 
 }
+	@WebMethod
+	public Magasin getMagasin(
+			
+			@WebParam(name="idMagasin")long idMagasin)
+	{
+
+
+return dao.getMagasin(idMagasin);
+}
 }

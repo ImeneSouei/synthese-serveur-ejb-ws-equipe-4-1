@@ -45,7 +45,7 @@ public class DaoImpl implements IdaoLocal, IdaoRemote {
 	@Override
 	public Magasin getMagasin(long idMagasin) {
 	
-		return em.getReference(Magasin.class, idMagasin);
+		return em.find(Magasin.class, idMagasin);
 	}
 
 	@Override
