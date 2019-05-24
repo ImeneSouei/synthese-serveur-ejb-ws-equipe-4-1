@@ -74,7 +74,7 @@ public class DaoImpl implements IdaoLocal, IdaoRemote {
 	@Override
 	public void supprimerProduitNonPerissable(long idProduit) {
 		Query q = null;
-		q = em.createQuery("DELETE FROM ProduitNonPerissable  WHERE p.idProduit = :y").setParameter("y", idProduit);
+		q = em.createQuery("DELETE FROM ProduitNonPerissable p  WHERE p.idProduit = :y").setParameter("y", idProduit);
 		idProduit = (long) q.executeUpdate();
 
 	}
@@ -82,7 +82,7 @@ public class DaoImpl implements IdaoLocal, IdaoRemote {
 	@Override
 	public ProduitNonPerissable getProduitNonPerissable(Long idProduit) {
 	
-		return em.getReference(ProduitNonPerissable.class, idProduit);
+		return em.find(ProduitNonPerissable.class, idProduit);
 	}
 
 	@Override
@@ -111,14 +111,14 @@ public class DaoImpl implements IdaoLocal, IdaoRemote {
 	@Override
 	public void supprimerProduitPerissable(long idProduit) {
 		Query q =null;
-		em.createQuery("delete from ProduitPerissable where x.idProduit= :z").setParameter("z", idProduit);
-		idProduit=(long)q.executeUpdate();
+		q=em.createQuery("DELETE FROM ProduitPerissable x WHERE x.idProduit= :z").setParameter("z", idProduit);
+		idProduit = (long) q.executeUpdate();
 		
 	}
 	@Override
 	public ProduitPerissable getProduitPerissable(long idProduit) {
 		
-		return em.getReference( ProduitPerissable.class,idProduit);
+		return em.find( ProduitPerissable.class,idProduit);
 	}
 
 	@Override
@@ -131,24 +131,35 @@ public class DaoImpl implements IdaoLocal, IdaoRemote {
 
 	@Override
 	public void ajouterProduit(Produit p, long idMagasin) {
-		Query q =null;
-		em.createQuery("update Produit p set p.magasin.idMagasin =  :k where p.produit = :s").setParameter("k", idMagasin).setParameter("s", p);
-		
+		Magasin m= em.find(Magasin.class, idMagasin);
+		p.setMagasin(m);
+		em.persist(p);
 	}
 
 	@Override
 	public void supprimerMagasin(Magasin m) {
-		Query q =null;
-		em.createQuery("delete from Magasin where m.Magasin= :x").setParameter("x", m);
-		q.executeUpdate();
+		em.remove(m);
 	}
 
 	@Override
 	public double calculPrixMagasin(Magasin m) {
 		// TODO Auto-generated method stub
-		return 0;
+		
+		 double PrixDuLocal = 0.0;        
+		 double coutTotal = 0;       
+		 int quantite =0;       
+		 Produit[] produits = (Produit[]) m.getProduits().toArray();                        
+		 for(int i= 0; i< produits.length; i++)        
+		 {           
+			 PrixDuLocal = produits[i].getPrix();           
+			 quantite = produits[i].getStock();                        
+			 coutTotal += PrixDuLocal * quantite;       
+			 }                
+		 return coutTotal;    
+		 }
+		
 	}
 
 
 
-}
+
