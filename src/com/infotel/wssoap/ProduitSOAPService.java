@@ -245,4 +245,13 @@ return dao.affichageProduitPerissable(idProduit);
 		
 	
 }
+	@WebMethod
+	public void supprimerMagasin1(
+			@WebParam(name="idMagasin") long idMagasin) {
+		
+		Magasin m = new Magasin();
+		
+		m = dao.getMagasin(idMagasin);
+		dao.supprimerMagasin(m);
+	}
 }
