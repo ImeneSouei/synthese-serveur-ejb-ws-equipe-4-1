@@ -62,7 +62,7 @@ public class DaoImpl implements IdaoLocal, IdaoRemote {
 
 	@Override
 	public List<ProduitNonPerissable> findAllProduitNonPerissable() {
-		return em.createQuery("select p from ProduitNonPerissable p ").getResultList();
+		return em.createQuery("select p from Produit p ").getResultList();
 	}
 
 	@Override
@@ -99,7 +99,7 @@ public class DaoImpl implements IdaoLocal, IdaoRemote {
 
 	@Override
 	public List<ProduitPerissable> findAllProduitPerissable() {
-		return em.createQuery("select x from ProduitPerissable x").getResultList();
+		return em.createQuery("select x from Produit x").getResultList();
 	}
 
 	@Override
